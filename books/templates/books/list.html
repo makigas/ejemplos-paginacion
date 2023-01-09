@@ -1,0 +1,40 @@
+<h1>Libros</h1>
+
+{% if books %}
+<p>Hay {{ count }} libros.</p>
+<table>
+	<thead>
+		<tr>
+			<th>Nombre</th>
+			<th>Author</th>
+			<th>Año</th>
+			<th>ISBN</th>
+			<th>Creación</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for book in books %}
+		<tr>
+			<td>{{ book.name }}</td>
+			<td>{{ book.author }}</td>
+			<td>{{ book.year }}</td>
+			<td>{{ book.isbn }}</td>
+			<td>{{ book.created_at | date }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+
+</table>
+{% else %}
+<p>No hay libros en este momento.</p>
+{% endif %}
+
+<form id="insert" method="POST" action="insert">
+	{% csrf_token %}
+	<input type="text" name="count" value="10" size="2">
+	<button type="submit">Más</button>
+</form>
+
+<style>
+	#insert { position: absolute; right: 5px; top: 5px; }
+</style>
