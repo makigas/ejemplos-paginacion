@@ -20,7 +20,13 @@ def insert_books(request):
 
 @require_GET
 def list_books(request):
+    cursor = request.GET.get('cursor')
     book_count = Book.objects.count()
-    books_list = Book.objects.all().order_by('-created_at')
-    context = {'books': books_list, 'count': book_count}
+    books_list = Book.objects.all().order_by('-id')
+    if cursor:
+        books_list = books_list.filter(id__lt=cursor)
+    books_list = books_list[0:20]
+    next_cursor = min([b.id for b in books_list])
+
+    context = {'books': books_list, 'count': book_count, 'next': next_cursor}
     return render(request, 'books/list.html', context)
