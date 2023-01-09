@@ -1,6 +1,19 @@
 <h1>Libros</h1>
 
 {% if books %}
+<form id="search" method="GET">
+	{% if page > 1 %}
+	<a href="?page={{ page|add:"-1" }}">Anterior</a>
+	{% endif %}
+	<span>
+	Página <input size="3" type="text" name="page" value="{{ page }}">
+	de un total de {{ pages }}
+	</span>
+	{% if page < pages %}
+	<a href="?page={{ page|add:1 }}">Siguiente</a>
+	{% endif %}
+</form>
+
 <p>Hay {{ count }} libros.</p>
 <table>
 	<thead>
@@ -37,4 +50,6 @@
 
 <style>
 	#insert { position: absolute; right: 5px; top: 5px; }
+	#search { display: flex; justify-content: space-between; text-align: center; }
+	#search span { flex: 1; }
 </style>
